@@ -1,26 +1,21 @@
 import React from "react";
-
-import {
-  Container,
-  ImageWrapper,
-  IronImage,
-  MarvelImageWrapper,
-  MarvelImage,
-  TextWrapper,
-  Title,
-  SubTitle,
-  ButtonWrapper,
-} from "./styles";
-import Iron from "../../assets/iron_man.png";
 import MarvelLogo from "../../assets/marvel_logo.png";
 import Button from "../../components/Button";
+import IronMan from "../../components/IronMan";
+import {
+  ButtonWrapper,
+  Container,
+  MarvelImage,
+  MarvelImageWrapper,
+  SubTitle,
+  TextWrapper,
+  Title,
+} from "./styles";
 
 const Splash: React.FC = () => {
   return (
     <Container>
-      <ImageWrapper>
-        <IronImage source={Iron} />
-      </ImageWrapper>
+      <IronMan />
       <MarvelImageWrapper>
         <MarvelImage source={MarvelLogo} />
       </MarvelImageWrapper>
