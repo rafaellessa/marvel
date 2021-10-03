@@ -12,6 +12,8 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
+import SignIn from "./src/screens/SignIn";
+import Characters from "./src/screens/Characters";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -28,7 +30,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Background>
-        <Splash />
+        <Characters />
       </Background>
     </ThemeProvider>
   );
