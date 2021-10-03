@@ -2,6 +2,7 @@ export default {
   colors: {
     primary: "#FF031A",
     secondary: "#000",
+    secondary100: "#363F5F",
     white: "#fff",
 
     gradientPrimary: "#000000",
