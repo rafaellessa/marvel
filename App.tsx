@@ -1,19 +1,18 @@
-import React from "react";
-import { ThemeProvider } from "styled-components/native";
-import Background from "./src/components/Background";
-import theme from "./src/global/theme";
-import Splash from "./src/screens/Splash";
-import AppLoading from "expo-app-loading";
-import { useFonts } from "expo-font";
-
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-import SignIn from "./src/screens/SignIn";
-import Characters from "./src/screens/Characters";
+import { NavigationContainer } from "@react-navigation/native";
+import AppLoading from "expo-app-loading";
+import { useFonts } from "expo-font";
+import React from "react";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components/native";
+import theme from "./src/global/theme";
+import store from "./src/redux/store";
+import StackRoutes from "./src/routes/StackRoutes";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -27,12 +26,18 @@ const App: React.FC = () => {
     return <AppLoading />;
   }
 
+  if (__DEV__) {
+    import("./ReactoTron").then(() => console.log("Reactotron Configurado"));
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-      <Background>
-        <Characters />
-      </Background>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <StackRoutes />
+        </NavigationContainer>
+      </ThemeProvider>
+    </Provider>
   );
 };
 
