@@ -1,3 +1,4 @@
+import { factoryCharacter } from "./factory";
 import Api from "../../datasource/api";
 import action from "./action";
 
@@ -8,7 +9,7 @@ const CharacterService = {
       method: "GET",
     });
 
-    return response.data.data.results;
+    return factoryCharacter(response.data.data);
   },
 };
 

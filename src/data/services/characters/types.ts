@@ -1,3 +1,4 @@
+import { ComicsCollectionReturnApi } from "./../comics/types";
 export interface CharacterApiReturn {
   results: CharacterApi[];
 }
@@ -7,6 +8,7 @@ interface CharacterApi {
   name: string;
   description: string;
   thumbnail: CharacterThumbnail;
+  comics: ComicsCollectionReturnApi;
 }
 
 interface CharacterThumbnail {
