@@ -1,3 +1,4 @@
+import { FlatList } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
@@ -21,6 +22,6 @@ export const ListWrapper = styled.View`
   margin-top: 11px;
 `;
 
-export const CharactersList = styled.View``;
+export const CharactersList = styled.FlatList`` as unknown as typeof FlatList;
 
 export const Footer = styled.View``;
