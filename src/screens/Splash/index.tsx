@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import MarvelLogo from "../../assets/marvel_logo.png";
 import Button from "../../components/Button";
@@ -13,6 +14,11 @@ import {
 } from "./styles";
 
 const Splash: React.FC = () => {
+  const navigation = useNavigation();
+
+  const handlePressButton = () => {
+    navigation.navigate("Signin");
+  };
   return (
     <Container>
       <IronMan />
@@ -24,7 +30,7 @@ const Splash: React.FC = () => {
         <SubTitle>Tudo sobre o universo Marvel em um único app.</SubTitle>
       </TextWrapper>
       <ButtonWrapper>
-        <Button title="Começar" />
+        <Button title="Começar" onPress={handlePressButton} />
       </ButtonWrapper>
     </Container>
   );
