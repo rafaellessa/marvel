@@ -4,7 +4,6 @@ import {
   Poppins_600SemiBold,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import React from "react";
@@ -12,7 +11,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/global/theme";
 import store from "./src/redux/store";
-import NavigationManager from "./src/routes/NavigationManager";
+import Routes from "./src/routes";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -33,9 +32,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <NavigationManager />
-        </NavigationContainer>
+        <Routes />
       </ThemeProvider>
     </Provider>
   );
