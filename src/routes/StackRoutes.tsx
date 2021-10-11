@@ -27,7 +27,7 @@ export const navigations: RootRouteScreens[] = [
   },
 ];
 
-const NavigationStack: React.FC = () => {
+const StackRoutes: React.FC = () => {
   const Stack = createStackNavigator();
 
   const renderNavigations = navigations.map(
@@ -62,4 +62,4 @@ const NavigationStack: React.FC = () => {
   );
 };
 
-export default NavigationStack;
+export default StackRoutes;
