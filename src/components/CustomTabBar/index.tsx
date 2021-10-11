@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import React, { useState } from "react";
-import { navigations } from "../../routes/TabRoutes";
+import { navigations } from "../../routes/auth.routes";
 import { Container, TabItem, TabItemIcon, TabItemTitle } from "./styles";
 
 interface CustomTabBarProps extends BottomTabBarProps {}
