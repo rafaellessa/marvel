@@ -35,7 +35,7 @@ export const navigations: RootRouteScreens[] = [
   },
 ];
 
-export const TabRoutes: React.FC = () => {
+export const AuthRoutes: React.FC = () => {
   const Tab = createBottomTabNavigator();
 
   const renderNavigations = navigations.map(

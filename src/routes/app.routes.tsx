@@ -1,12 +1,10 @@
-import React, { FunctionComponent } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
+import React, { FunctionComponent } from "react";
 import { StatusBar } from "react-native";
-import Splash from "../screens/Splash";
+import Background from "../components/Background";
 import Characters from "../screens/Characters";
 import SignIn from "../screens/SignIn";
-import Background from "../components/Background";
-
+import Splash from "../screens/Splash";
 interface RootRouteScreens {
   name: string;
   component: FunctionComponent<any>;
@@ -27,7 +25,7 @@ export const navigations: RootRouteScreens[] = [
   },
 ];
 
-const StackRoutes: React.FC = () => {
+export const AppRoutes: React.FC = () => {
   const Stack = createStackNavigator();
 
   const renderNavigations = navigations.map(
@@ -61,5 +59,3 @@ const StackRoutes: React.FC = () => {
     </Stack.Navigator>
   );
 };
-
-export default StackRoutes;
