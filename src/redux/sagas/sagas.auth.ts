@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import authService from "../../data/services/auth";
-import { saveInSecureStore } from "../../utils/secureStorage";
+import { setItemAsync } from "expo-secure-store";
 import {
   AuthorizationResponse,
   UserInformationResponse,
@@ -10,6 +10,7 @@ import {
   RequestLogin,
   RequestUpdateUserInformation,
 } from "./../types/types.auth";
+import * as RootNavigation from "../../navigation";
 
 function* login({ option }: RequestLogin) {
   try {
@@ -20,7 +21,7 @@ function* login({ option }: RequestLogin) {
 
       if (authorization.type === "success") {
         yield call(
-          saveInSecureStore,
+          setItemAsync,
           "accessToken",
           authorization.params.access_token
         );
@@ -37,6 +38,8 @@ function* login({ option }: RequestLogin) {
             photo: userInformation.picture,
           })
         );
+
+        RootNavigation.navigate("Characters" as never, {} as never);
       }
     }
   } catch (error) {
