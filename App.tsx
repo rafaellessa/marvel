@@ -12,7 +12,7 @@ import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/global/theme";
 import store from "./src/redux/store";
-import StackRoutes from "./src/routes/StackRoutes";
+import NavigationManager from "./src/routes/NavigationManager";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -34,7 +34,7 @@ const App: React.FC = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <StackRoutes />
+          <NavigationManager />
         </NavigationContainer>
       </ThemeProvider>
     </Provider>
