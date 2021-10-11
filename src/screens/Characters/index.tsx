@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import InputSearch from "../../components/InputSearch";
 import Loading from "../../components/Loading";
 import { CharacterAction } from "../../redux/reducers/reducers.characters";
+import { getUser } from "../../redux/selectors/selectors.auth";
 import {
   getCharacters,
   getCharactersMetadata,
@@ -22,18 +23,21 @@ const Characters: React.FC = () => {
   const dispatch = useDispatch();
   const characters = useSelector(getCharacters);
   const { loading } = useSelector(getCharactersMetadata);
+  const user = useSelector(getUser);
+
   useEffect(() => {
-    !characters.length && fetchCharacters();
+    fetchCharacters();
   }, []);
 
   const fetchCharacters = async () => {
     dispatch(CharacterAction.requestGetAllCharacters({}));
   };
+
   const renderLoading = () => <Loading />;
 
   const renderContent = () => (
     <Container>
-      <Header urlPhoto="https://github.com/rafaellessa.png" userName="Rafael" />
+      <Header urlPhoto={user.photo} userName={user.name} />
       <InputWrapper>
         <InputSearch />
       </InputWrapper>
