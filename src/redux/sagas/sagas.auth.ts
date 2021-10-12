@@ -37,7 +37,7 @@ function* login({ option }: RequestLogin) {
         yield put(
           AuthAction.requestSuccessLogin({
             id: userInformation.id,
-            name: userInformation.name,
+            name: userInformation.given_name,
             email: userInformation.email,
             photo: userInformation.picture,
           })
@@ -61,7 +61,7 @@ function* updateUserInformation({ token }: RequestUpdateUserInformation) {
     yield put(
       AuthAction.requestSuccessUpdateUserInformation({
         id: response.id,
-        name: response.name,
+        name: response.given_name,
         email: response.email,
         photo: response.picture,
       })
