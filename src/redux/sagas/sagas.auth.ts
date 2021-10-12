@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import authService from "../../data/services/auth";
-import { setItemAsync } from "expo-secure-store";
+import { setItemAsync, deleteItemAsync, getItemAsync } from "expo-secure-store";
 import {
   AuthorizationResponse,
   UserInformationResponse,
@@ -20,6 +20,10 @@ function* login({ option }: RequestLogin) {
       );
 
       if (authorization.type === "success") {
+        const previousToken = yield call(getItemAsync, "accessToken");
+        if (previousToken) {
+          yield call(deleteItemAsync, "accessToken");
+        }
         yield call(
           setItemAsync,
           "accessToken",
