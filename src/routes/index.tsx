@@ -28,9 +28,8 @@ const Routes: React.FC = () => {
   const validateRoutes = () => {
     if (!Object.keys(user).length) {
       return <AppRoutes />;
-    } else {
-      return <AuthRoutes />;
     }
+    return <AuthRoutes />;
   };
 
   return (

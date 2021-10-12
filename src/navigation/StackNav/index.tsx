@@ -1,29 +1,30 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { FunctionComponent } from "react";
 import { StatusBar } from "react-native";
-import Background from "../components/Background";
-import SignIn from "../screens/SignIn";
-import Splash from "../screens/Splash";
+import Background from "../../components/Background";
+import Details from "../../screens/Details";
+import Tab from "../Tab";
+
 interface RootRouteScreens {
   name: string;
   component: FunctionComponent<any>;
 }
 
-export const navigations: RootRouteScreens[] = [
+const stackNavigations: RootRouteScreens[] = [
   {
-    name: "Splash",
-    component: Splash,
+    name: "Home",
+    component: Tab,
   },
   {
-    name: "Signin",
-    component: SignIn,
+    name: "Details",
+    component: Details,
   },
 ];
 
-export const AppRoutes: React.FC = () => {
+const StackNav: React.FC = () => {
   const Stack = createStackNavigator();
 
-  const renderNavigations = navigations.map(
+  const renderStackNavigations = stackNavigations.map(
     ({ name, component: Component }) => {
       return (
         <Stack.Screen key={name} name={name}>
@@ -41,7 +42,6 @@ export const AppRoutes: React.FC = () => {
       );
     }
   );
-
   return (
     <Stack.Navigator
       initialRouteName="Splash"
@@ -50,7 +50,9 @@ export const AppRoutes: React.FC = () => {
         animationEnabled: true,
       }}
     >
-      {renderNavigations}
+      {renderStackNavigations}
     </Stack.Navigator>
   );
 };
+
+export default StackNav;
