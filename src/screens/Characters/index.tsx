@@ -1,5 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useTheme } from "styled-components/native";
 import CharacterItem from "../../components/CharacterItem";
 import Header from "../../components/Header";
 import InputSearch from "../../components/InputSearch";
@@ -10,6 +12,7 @@ import {
   getCharacters,
   getCharactersMetadata,
 } from "../../redux/selectors/selectors.characters";
+import { Character } from "../../redux/types/types.characters";
 import {
   CharactersList,
   Container,
@@ -20,17 +23,74 @@ import {
 } from "./styles";
 
 const Characters: React.FC = () => {
+  const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
+  const [loadingPage, setLoadingPage] = useState(false);
+  const [page, setPage] = useState(0);
+  const [searchText, setSearchText] = useState("");
+
   const dispatch = useDispatch();
   const characters = useSelector(getCharacters);
-  const { loading } = useSelector(getCharactersMetadata);
+  const { loading: loadingCharacters } = useSelector(getCharactersMetadata);
   const user = useSelector(getUser);
+  const theme = useTheme();
+  const LIMIT_PAGE = 20;
 
   useEffect(() => {
-    fetchCharacters();
+    setLoadingPage(true);
+    !characters.length && fetchCharacters();
   }, []);
 
-  const fetchCharacters = async () => {
-    dispatch(CharacterAction.requestGetAllCharacters({}));
+  useEffect(() => {
+    if (characters.length) {
+      setLoadingPage(false);
+    }
+  }, [characters]);
+
+  useEffect(() => {
+    if (searchText.length >= 3) {
+      handleParseFilteredCharacters();
+    }
+
+    if (!searchText.length) {
+      setFilteredCharacters([]);
+    }
+  }, [searchText]);
+
+  const fetchCharacters = async (page?: number) => {
+    if (page) {
+      dispatch(
+        CharacterAction.requestGetAllCharacters({
+          offset: page * LIMIT_PAGE,
+          limit: LIMIT_PAGE,
+        })
+      );
+    } else {
+      dispatch(CharacterAction.requestGetAllCharacters({}));
+    }
+  };
+
+  const handleParseFilteredCharacters = () => {
+    const filtered = characters.filter((character) =>
+      character.name.match(new RegExp(searchText, "i"))
+    );
+
+    if (!filtered.length) {
+      dispatch(CharacterAction.requestGetAllCharacters({ name: searchText }));
+    } else {
+      setFilteredCharacters(filtered);
+    }
+  };
+
+  const handleRefetch = () => {
+    setPage(0);
+    fetchCharacters();
+  };
+
+  const handleEndReachedList = () => {
+    if (!loadingCharacters && filteredCharacters.length === 0) {
+      fetchCharacters(page + 1);
+      setPage(page + 1);
+    }
   };
 
   const renderLoading = () => <Loading />;
@@ -39,16 +99,31 @@ const Characters: React.FC = () => {
     <Container>
       <Header urlPhoto={user.photo} userName={user.name} />
       <InputWrapper>
-        <InputSearch />
+        <InputSearch
+          onSearch={(text) => setSearchText(text)}
+          search={searchText}
+        />
       </InputWrapper>
       <ListWrapper>
         <ListHeader>Personagens</ListHeader>
         <CharactersList
-          data={characters}
+          data={filteredCharacters.length ? filteredCharacters : characters}
           renderItem={({ item }) => (
             <CharacterItem title={item.name} urlPhoto={item.thumbnail} />
           )}
           numColumns={2}
+          keyExtractor={(item) => String(item.id)}
+          refreshControl={
+            <RefreshControl
+              refreshing={loadingCharacters}
+              onRefresh={handleRefetch}
+              colors={[theme.colors.primary]}
+              tintColor={theme.colors.primary}
+            />
+          }
+          onEndReachedThreshold={0.2}
+          onEndReached={handleEndReachedList}
+          ListFooterComponent={loadingCharacters ? <Loading /> : null}
         />
       </ListWrapper>
       <Footer />
@@ -56,7 +131,7 @@ const Characters: React.FC = () => {
   );
 
   const validateRender = () => {
-    if (loading) {
+    if (loadingPage) {
       return renderLoading();
     }
 

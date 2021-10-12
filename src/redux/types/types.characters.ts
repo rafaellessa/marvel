@@ -28,6 +28,8 @@ export type CharacterState = ImmutableObject<State>;
 
 export interface RequestGetAllCharactersParams {
   offset?: number;
+  limit?: number;
+  name?: string;
 }
 
 export interface RequestGetAllCharacters extends Action<CharacterActionTypes> {
