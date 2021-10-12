@@ -4,11 +4,16 @@ import { CharacterImage, Container, ImageWrapper, Title } from "./styles";
 interface CharacterItemProps {
   title: string;
   urlPhoto: string;
+  onItemPress: () => void;
 }
 
-const CharacterItem: React.FC<CharacterItemProps> = ({ title, urlPhoto }) => {
+const CharacterItem: React.FC<CharacterItemProps> = ({
+  title,
+  urlPhoto,
+  onItemPress,
+}) => {
   return (
-    <Container>
+    <Container onPress={onItemPress}>
       <ImageWrapper>
         <CharacterImage
           source={{
