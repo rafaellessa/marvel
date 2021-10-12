@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useEffect, useState } from "react";
 import { RefreshControl } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import InputSearch from "../../components/InputSearch";
 import Loading from "../../components/Loading";
 import { CharacterAction } from "../../redux/reducers/reducers.characters";
 import { getUser } from "../../redux/selectors/selectors.auth";
+import * as RootNavigation from "../../navigation";
 import {
   getCharacters,
   getCharactersMetadata,
@@ -109,7 +111,16 @@ const Characters: React.FC = () => {
         <CharactersList
           data={filteredCharacters.length ? filteredCharacters : characters}
           renderItem={({ item }) => (
-            <CharacterItem title={item.name} urlPhoto={item.thumbnail} />
+            <CharacterItem
+              title={item.name}
+              urlPhoto={item.thumbnail}
+              onItemPress={() => {
+                RootNavigation.navigate(
+                  "Details" as never,
+                  { character: item } as never
+                );
+              }}
+            />
           )}
           numColumns={2}
           keyExtractor={(item) => String(item.id)}
