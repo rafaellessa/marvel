@@ -27,6 +27,8 @@ export interface State {
 
 export type AuthState = ImmutableObject<State>;
 
+export type Reset = Action<AuthActionTypes>;
+
 export interface RequestLogin extends Action<AuthActionTypes> {
   option: "google" | "facebook";
 }
@@ -62,6 +64,7 @@ export interface CreatorTypes {
   requestFailureUpdateUserInformation(
     error: string | null
   ): RequestUpdateUserInformation;
+  reset(): Reset;
 }
 
 export type ReducerTypes = RequestLogin &
@@ -69,4 +72,5 @@ export type ReducerTypes = RequestLogin &
   RequestFailureLogin &
   RequestUpdateUserInformation &
   RequestSuccessUpdateUserInformation &
-  RequestFailureUpdateUserInformation;
+  RequestFailureUpdateUserInformation &
+  Reset;

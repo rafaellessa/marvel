@@ -1,16 +1,19 @@
+import { getUser } from "./../redux/selectors/selectors.auth";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Character } from "./../redux/types/types.characters";
 
 const useFavorites = () => {
   const [favorites, setFavorites] = useState<Character[]>([]);
-
+  const user = useSelector(getUser);
+  const favoriteKey = `favorites@${user.id}`;
   useEffect(() => {
     fetchFavorites();
   }, []);
 
   const fetchFavorites = async () => {
-    const localFavorites = await AsyncStorage.getItem("favorites");
+    const localFavorites = await AsyncStorage.getItem(favoriteKey);
     const parsedFavorites =
       localFavorites && (JSON.parse(localFavorites) as Character[]);
 
@@ -32,12 +35,12 @@ const useFavorites = () => {
 
         setFavorites(filteredFavorites);
         await AsyncStorage.setItem(
-          "favorites",
+          favoriteKey,
           JSON.stringify([...filteredFavorites])
         );
       } else {
         await AsyncStorage.setItem(
-          "favorites",
+          favoriteKey,
           JSON.stringify([...favorites, character])
         );
         setFavorites([...favorites, character]);

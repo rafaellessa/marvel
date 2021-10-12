@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import PageHeader from "../../components/PageHeader";
+import useAuth from "../../hooks/useAuth";
 import { getUser } from "../../redux/selectors/selectors.auth";
 import {
   Container,
@@ -14,16 +15,17 @@ import {
 
 const Profile: React.FC = () => {
   const user = useSelector(getUser);
+  const { logoff } = useAuth();
   return (
     <Container>
-      <PageHeader title="Perfil" />
+      <PageHeader rightIcon={false} title="Perfil" />
       <UserInfoWrapper>
         <UserAvatar source={{ uri: user.photo }} />
         <UserName>{user.name}</UserName>
         <UserEmail>{user.email}</UserEmail>
       </UserInfoWrapper>
       <Footer>
-        <Button title="Sair" />
+        <Button title="Sair" onPress={() => logoff()} />
       </Footer>
     </Container>
   );

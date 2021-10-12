@@ -17,7 +17,7 @@ const { Types, Creators } = createActions<AuthActionTypes, CreatorTypes>(
     requestUpdateUserInformation: ["token"],
     requestSuccessUpdateUserInformation: ["user"],
     requestFailureUpdateUserInformation: ["error"],
-    reset: null,
+    reset: [""],
   },
   {
     prefix: `${AppReducers.root}/${AppReducers.auth}/`,
