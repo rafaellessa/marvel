@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import React, { useState } from "react";
-import { navigations } from "../../routes/auth.routes";
+import { tabNavigations } from "../../navigation/Tab";
 import { Container, TabItem, TabItemIcon, TabItemTitle } from "./styles";
 
 interface CustomTabBarProps extends BottomTabBarProps {}
@@ -15,7 +15,7 @@ const CustomTabBar: React.FC<CustomTabBarProps> = ({ navigation }) => {
 
   return (
     <Container>
-      {navigations.map((item, index) => (
+      {tabNavigations.map((item, index) => (
         <TabItem key={index} onPress={() => handleNavigate(item.name)}>
           <TabItemIcon
             name={item.iconName}
